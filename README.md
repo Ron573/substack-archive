@@ -24,3 +24,19 @@ https://ron573.github.io/substack-archive
 Ron Botelho  
 Ph.D. Student in Complex Sciences  
 Binghamton University  
+
+---
+
+### ⚠️ Important Note
+
+Out of respect for Binghamton University’s policies regarding student use of institutional accounts, I’ve moved the digital archive of my Substack writings to a **dedicated, non-commercial GitHub repository**.
+
+This archive is not monetized, sponsored, or affiliated with any organization—academic or otherwise. It exists solely to preserve the historical, political, and systems-level analysis I’ve developed as part of my ongoing **Ph.D. work in Complex Sciences**.
+
+The material remains free to read, reference, and reproduce (non-commercially) under Creative Commons. I’m committed to making knowledge public, accessible, and unaltered.
+
+**View the archive here:**  
+🔗 [https://Ron573.github.io/substack-archive](https://Ron573.github.io/substack-archive)
+
+Thank you for continuing to read, share, and challenge the dangerous normalization of authoritarianism.  
+—Ron
