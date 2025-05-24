@@ -1,33 +1,73 @@
 name: Sync Substack RSS to index.html
 
 on:
-  schedule:
-    - cron: '0 8 * * *'  # Daily at 8 AM UTC
   workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'  # every hour
 
 jobs:
-  update-archive:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
+    - name: Install Python feedparser
+      run: pip install feedparser
 
-      - name: Install feedparser
-        run: pip install feedparser
+    - name: Generate index.html from Substack RSS
+      run: |
+        python3 <<EOF
+        import feedparser
+        import datetime
 
-      - name: Run RSS to HTML script
-        run: python rss_to_html.py
+        rss_url = "https://ronaldjbotelho.substack.com/feed"
+        feed = feedparser.parse(rss_url)
 
-      - name: Commit changes
-        run: |
-          git config user.name "RonBot"
-          git config user.email "ronbot@users.noreply.github.com"
-          git add index.html
-          git commit -m "Automated update from Substack RSS" || echo "No changes"
-          git push origin main
+        with open("index.html", "w") as f:
+            f.write("""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ron Botelho – Substack Archive</title>
+  <style>
+    body { font-family: Georgia, serif; background-color: #0e0e0e; color: #f0f0f0; max-width: 960px; margin: 0 auto; padding: 2em; line-height: 1.6; }
+    h1, h2 { text-align: center; color: #ffffff; }
+    .article-list { margin-top: 2em; }
+    .article-item { margin-bottom: 1.5em; }
+    .article-item a { color: #3fa9f5; font-size: 1.1em; text-decoration: none; }
+    .article-item a:hover { text-decoration: underline; }
+    .date { display: block; color: #aaa; font-size: 0.9em; margin-top: 0.3em; }
+    .footer { text-align: center; margin-top: 3em; font-size: 0.85em; color: #666; }
+  </style>
+</head>
+<body>
+  <h1>Ronald J. Botelho</h1>
+  <h2>Substack Article Archive</h2>
+  <div class="article-list">
+""")
+
+            for entry in feed.entries:
+                title = entry.title
+                link = entry.link
+                pub_date = datetime.datetime(*entry.published_parsed[:6]).strftime('%B %d, %Y')
+                f.write(f'    <div class="article-item"><a href="{link}">{title}</a><span class="date">{pub_date}</span></div>\n')
+
+            f.write("""  </div>
+  <div class="footer">
+    <p>All content &copy; Ronald J. Botelho | <a href="https://ronaldjbotelho.substack.com">Back to Substack</a></p>
+  </div>
+</body>
+</html>""")
+        EOF
+
+    - name: Commit and push if changed
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add index.html
+        git diff --cached --quiet || git commit -m "Auto-update index.html from Substack RSS"
+        git push
 
