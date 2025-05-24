@@ -1,16 +1,16 @@
 - name: Generate full index.html from RSS feed
   run: |
-    python3 <<EOF
-    import feedparser
-    import datetime
+    echo "
+import feedparser
+import datetime
 
-    feed = feedparser.parse("https://ronaldjbotelho.substack.com/feed")
+feed = feedparser.parse('https://ronaldjbotelho.substack.com/feed')
 
-    header = '''<!DOCTYPE html>
-<html lang="en">
+header = '''<!DOCTYPE html>
+<html lang='en'>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
   <title>Ron Botelho – Substack Archive</title>
   <style>
     body { font-family: Georgia, serif; background-color: #0e0e0e; color: #f0f0f0; max-width: 960px; margin: 0 auto; padding: 2em; line-height: 1.6; }
@@ -26,91 +26,30 @@
 <body>
   <h1>Ronald J. Botelho</h1>
   <h2>Substack Article Archive</h2>
-  <p style="text-align:center; font-size: 1em; color: #ccc;">
-    <strong>Ronald J. Botelho</strong> is a Ph.D. student in Complex Sciences at Binghamton University.  
+  <p style='text-align:center; font-size: 1em; color: #ccc;'>
+    <strong>Ronald J. Botelho</strong> is a Ph.D. student in Complex Sciences at Binghamton University.
     His research draws from intelligence analysis, systems science, and information theory to expose 
     systemic threats to democracy and trace the anatomy of disinformation in modern governance.
   </p>
-  <div class="article-list">
+  <div class='article-list'>
 '''
 
-    footer = '''  </div>
-  <div class="footer">
-    <p>All content &copy; Ronald J. Botelho | <a href="https://ronaldjbotelho.substack.com">Back to Substack</a></p>
+footer = '''  </div>
+  <div class='footer'>
+    <p>All content &copy; Ronald J. Botelho | <a href='https://ronaldjbotelho.substack.com'>Back to Substack</a></p>
   </div>
 </body>
 </html>'''
 
-    items = ""
-    for entry in feed.entries:
-        title = entry.title
-        link = entry.link
-        date = datetime.datetime(*entry.published_parsed[:6]).strftime('%B %d, %Y')
-        items += f'<div class="article-item"><a href="{link}">{title}</a><span class="date">{date}</span></div>\n'
-
-    with open("index.html", "w") as f:
-        f.write(header + items + footer)
-EOF
- Updated GitHub Actions Workflow: .github/workflows/rss-sync.yml
-
-name: Sync Substack RSS to index.html
-
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 * * * *'  # every hour
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-
-    - name: Install Python feedparser
-      run: pip install feedparser
-
-    - name: Generate full index.html from RSS feed
-run: |
-  echo 'import feedparser
-import datetime
-
-feed = feedparser.parse("https://ronaldjbotelho.substack.com/feed")
-
-header = """<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  ...
-</head>
-<body>
-  <h1>Ronald J. Botelho</h1>
-  <h2>Substack Article Archive</h2>
-  <p style="text-align:center; font-size: 1em; color: #ccc;">
-    <strong>Ronald J. Botelho</strong> is a Ph.D. student in Complex Sciences at Binghamton University.  
-    His research draws from intelligence analysis, systems science, and information theory to expose 
-    systemic threats to democracy and trace the anatomy of disinformation in modern governance.
-  </p>
-  <div class="article-list">
-"""
-
-footer = """  </div>
-  <div class="footer">
-    <p>All content &copy; Ronald J. Botelho | <a href="https://ronaldjbotelho.substack.com">Back to Substack</a></p>
-  </div>
-</body>
-</html>"""
-
-items = ""
+items = ''
 for entry in feed.entries:
     title = entry.title
     link = entry.link
-    date = datetime.datetime(*entry.published_parsed[:6]).strftime("%B %d, %Y")
-    items += f"<div class=\\"article-item\\"><a href=\\"{link}\\">{title}</a><span class=\\"date\\">{date}</span></div>\\n"
+    date = datetime.datetime(*entry.published_parsed[:6]).strftime('%B %d, %Y')
+    items += f\"\"\"<div class='article-item'><a href='{link}'>{title}</a><span class='date'>{date}</span></div>\n\"\"\"
 
-with open("index.html", "w") as f:
-    f.write(header + items + footer)' > build_index.py
-
-  python3 build_index.py
+with open('index.html', 'w') as f:
+    f.write(header + items + footer)
+" > generate_index.py
+    python3 generate_index.py
 
