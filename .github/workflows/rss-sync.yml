@@ -1,0 +1,33 @@
+name: Sync Substack RSS to index.html
+
+on:
+  schedule:
+    - cron: '0 8 * * *'  # Daily at 8 AM UTC
+  workflow_dispatch:
+
+jobs:
+  update-archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install feedparser
+        run: pip install feedparser
+
+      - name: Run RSS to HTML script
+        run: python rss_to_html.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "RonBot"
+          git config user.email "ronbot@users.noreply.github.com"
+          git add index.html
+          git commit -m "Automated update from Substack RSS" || echo "No changes"
+          git push origin main
+
