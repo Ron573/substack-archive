@@ -1,3 +1,5 @@
+# Updated GitHub Actions Workflow: .github/workflows/rss-sync.yml
+
 name: Sync Substack RSS to index.html
 
 on:
@@ -16,17 +18,15 @@ jobs:
     - name: Install Python feedparser
       run: pip install feedparser
 
-    - name: Generate index.html from Substack RSS
+    - name: Generate full index.html from RSS feed
       run: |
         python3 <<EOF
         import feedparser
         import datetime
 
-        rss_url = "https://ronaldjbotelho.substack.com/feed"
-        feed = feedparser.parse(rss_url)
+        feed = feedparser.parse("https://ronaldjbotelho.substack.com/feed")
 
-        with open("index.html", "w") as f:
-            f.write("""<!DOCTYPE html>
+        header = '''<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -47,27 +47,31 @@ jobs:
   <h1>Ronald J. Botelho</h1>
   <h2>Substack Article Archive</h2>
   <div class="article-list">
-""")
+'''
 
-            for entry in feed.entries:
-                title = entry.title
-                link = entry.link
-                pub_date = datetime.datetime(*entry.published_parsed[:6]).strftime('%B %d, %Y')
-                f.write(f'    <div class="article-item"><a href="{link}">{title}</a><span class="date">{pub_date}</span></div>\n')
-
-            f.write("""  </div>
+        footer = '''  </div>
   <div class="footer">
     <p>All content &copy; Ronald J. Botelho | <a href="https://ronaldjbotelho.substack.com">Back to Substack</a></p>
   </div>
 </body>
-</html>""")
+</html>'''
+
+        items = ""
+        for entry in feed.entries:
+            title = entry.title
+            link = entry.link
+            date = datetime.datetime(*entry.published_parsed[:6]).strftime('%B %d, %Y')
+            items += f'<div class="article-item"><a href="{link}">{title}</a><span class="date">{date}</span></div>\n'
+
+        with open("index.html", "w") as f:
+            f.write(header + items + footer)
         EOF
 
-    - name: Commit and push if changed
+    - name: Commit and push if updated
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git add index.html
-        git diff --cached --quiet || git commit -m "Auto-update index.html from Substack RSS"
+        git diff --cached --quiet || git commit -m "Auto-update index.html with all Substack articles"
         git push
 
