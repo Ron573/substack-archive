@@ -1,7 +1,7 @@
 name: Sync Substack RSS to index.html
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}  # <- Add this exact line
   schedule:
     - cron: '0 * * * *'
 
