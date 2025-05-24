@@ -1,6 +1,26 @@
-- name: Generate full index.html from RSS feed
-  run: |
-    echo "
+# Updated GitHub Actions Workflow: .github/workflows/rss-sync.yml
+
+name: Sync Substack RSS to index.html
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'  # every hour
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install Python feedparser
+      run: pip install feedparser
+
+    - name: Generate full index.html from RSS feed
+      run: |
+        cat <<EOF > generate_index.py
 import feedparser
 import datetime
 
@@ -27,7 +47,7 @@ header = '''<!DOCTYPE html>
   <h1>Ronald J. Botelho</h1>
   <h2>Substack Article Archive</h2>
   <p style='text-align:center; font-size: 1em; color: #ccc;'>
-    <strong>Ronald J. Botelho</strong> is a Ph.D. student in Complex Sciences at Binghamton University.
+    <strong>Ronald J. Botelho</strong> is a Ph.D. student in Complex Sciences at Binghamton University.  
     His research draws from intelligence analysis, systems science, and information theory to expose 
     systemic threats to democracy and trace the anatomy of disinformation in modern governance.
   </p>
@@ -46,10 +66,18 @@ for entry in feed.entries:
     title = entry.title
     link = entry.link
     date = datetime.datetime(*entry.published_parsed[:6]).strftime('%B %d, %Y')
-    items += f\"\"\"<div class='article-item'><a href='{link}'>{title}</a><span class='date'>{date}</span></div>\n\"\"\"
+    items += f"""<div class='article-item'><a href='{link}'>{title}</a><span class='date'>{date}</span></div>\n"""
 
 with open('index.html', 'w') as f:
     f.write(header + items + footer)
-" > generate_index.py
-    python3 generate_index.py
+EOF
+        python3 generate_index.py
+
+    - name: Commit and push if updated
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add index.html
+        git diff --cached --quiet || git commit -m "Auto-update index.html with all Substack articles"
+        git push
 
