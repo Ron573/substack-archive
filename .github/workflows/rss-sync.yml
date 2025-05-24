@@ -46,6 +46,11 @@ jobs:
 <body>
   <h1>Ronald J. Botelho</h1>
   <h2>Substack Article Archive</h2>
+  <p style="text-align:center; font-size: 1em; color: #ccc;">
+    <strong>Ronald J. Botelho</strong> is a Ph.D. student in Complex Sciences at Binghamton University.  
+    His research draws from intelligence analysis, systems science, and information theory to expose 
+    systemic threats to democracy and trace the anatomy of disinformation in modern governance.
+  </p>
   <div class="article-list">
 '''
 
