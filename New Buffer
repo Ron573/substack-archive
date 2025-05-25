@@ -1,0 +1,22 @@
+RonB@iMacPro substack-archive % >....                                           
+.date { display: block; color: #aaa; font-size: 0.9em; margin-top: 0.3em; }
+.footer { text-align: center; margin-top: 3em; font-size: 0.85em; color: #666; } 
+</style></head><body>
+<h1>Ronald J. Botelho</h1><h2>Substack Article Archive</h2><div class='article-list'>
+'''
+
+footer = '</div><div class=\"footer\"><p>All content &copy; Ronald J. Botelho | <a href=\"https://ronaldjbotelho.substack.com\">Back to Substack</a></p></div></body></html>'
+items = ''
+for entry in feed.entries:
+    title = entry.title
+    link = entry.link
+    date = datetime.datetime(*entry.published_parsed[:6]).strftime('%B %d, %Y')
+    items += f'<div class=\"article-item\"><a href=\"{link}\">{title}</a><span class=\"date\">{date}</span></div>\\n'
+
+with open('index.html', 'w') as f:
+    f.write(header + items + footer)
+"
+
+zsh: event not found: DOCTYPE
+RonB@iMacPro substack-archive % 
+

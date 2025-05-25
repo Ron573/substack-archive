@@ -1,7 +1,7 @@
 import feedparser
 import datetime
 
-feed = feedparser.parse("https://ronaldjbotelho.substack.com/feed")
+feed = feedparser.parse('https://ronaldjbotelho.substack.com/feed')
 
 header = '''<!DOCTYPE html>
 <html lang='en'>
@@ -45,6 +45,6 @@ for entry in feed.entries:
     date = datetime.datetime(*entry.published_parsed[:6]).strftime('%B %d, %Y')
     items += f"<div class='article-item'><a href='{link}'>{title}</a><span class='date'>{date}</span></div>\n"
 
-with open("index.html", "w", encoding="utf-8") as f:
+with open("index.html", "w") as f:
     f.write(header + items + footer)
 
