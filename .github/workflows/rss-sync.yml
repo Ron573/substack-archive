@@ -1,24 +1,24 @@
 name: Sync Substack RSS to index.html
 
 on:
-  workflow_dispatch: {}  # <- Add this exact line
+  workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 * * * *'  # runs every hour
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Install Python feedparser
-        run: pip install feedparser
+    - name: Install dependencies
+      run: pip install feedparser
 
-- name: Generate full index.html from RSS feed
-  run: |
-    cat <<EOF > generate_index.py
+    - name: Generate full index.html from RSS feed
+      run: |
+        cat <<EOF > generate_index.py
 import feedparser
 import datetime
 
@@ -29,7 +29,7 @@ header = '''<!DOCTYPE html>
 <head>
   <meta charset='UTF-8'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-  <title>Ronald J. Botelho – Substack Archive</title>
+  <title>Ron Botelho – Substack Archive</title>
   <style>
     body { font-family: Georgia, serif; background-color: #0e0e0e; color: #f0f0f0; max-width: 960px; margin: 0 auto; padding: 2em; line-height: 1.6; }
     h1, h2 { text-align: center; color: #ffffff; }
@@ -45,8 +45,9 @@ header = '''<!DOCTYPE html>
   <h1>Ronald J. Botelho</h1>
   <h2>Substack Article Archive</h2>
   <p style='text-align:center; font-size: 1em; color: #ccc;'>
-    <strong>Ronald J. Botelho</strong> is a Ph.D. student in Complex Sciences at Binghamton University.<br>
-    His research draws from intelligence analysis, systems science, and information theory to expose systemic threats to democracy and trace the anatomy of disinformation in modern governance.
+    <strong>Ronald J. Botelho</strong> is a Ph.D. student in Complex Sciences at Binghamton University.  
+    His research draws from intelligence analysis, systems science, and information theory to expose 
+    systemic threats to democracy and trace the anatomy of disinformation in modern governance.
   </p>
   <div class='article-list'>
 '''
@@ -69,5 +70,11 @@ with open('index.html', 'w') as f:
     f.write(header + items + footer)
 EOF
 
-    python3 generate_index.py
+    - name: Commit and push if index.html updated
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add index.html
+        git diff --cached --quiet || git commit -m "Auto-update index.html with Substack articles"
+        git push
 
