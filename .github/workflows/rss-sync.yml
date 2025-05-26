@@ -1,81 +1,55 @@
-Hub Actions Workflow: .github/workflows/rss-sync.yml
-
-name: Sync Substack RSS to index.html
+# .github/workflows/rss-sync.yml
+name: Sync Substack RSS to Markdown
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'  # every hour
+    - cron: '0 7 * * *'  # Runs at 3:00 AM ET (7:00 UTC)
+  workflow_dispatch:     # Allows manual trigger from GitHub UI
 
 jobs:
-  build:
+  sync-substack:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v4
 
-    - name: Install Python feedparser
-      run: pip install feedparser
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-    - name: Generate full index.html from RSS feed
-      run: |
-        cat <<EOF > generate_index.py
-import feedparser
-import datetime
+      - name: Install Feedparser
+        run: pip install feedparser markdownify
 
-feed = feedparser.parse('https://ronaldjbotelho.substack.com/feed')
+      - name: Fetch Substack RSS and Save as Markdown
+        run: |
+          mkdir -p posts
+          python3 <<EOF
+          import feedparser
+          from markdownify import markdownify
+          import os
+          import re
+          import datetime
 
-header = '''<!DOCTYPE html>
-<html lang='en'>
-<head>
-  <meta charset='UTF-8'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-  <title>Ron Botelho – Substack Archive</title>
-  <style>
-    body { font-family: Georgia, serif; background-color: #0e0e0e; color: #f0f0f0; max-width: 960px; margin: 0 auto; padding: 2em; line-height: 1.6; }
-    h1, h2 { text-align: center; color: #ffffff; }
-    .article-list { margin-top: 2em; }
-    .article-item { margin-bottom: 1.5em; }
-    .article-item a { color: #3fa9f5; font-size: 1.1em; text-decoration: none; }
-    .article-item a:hover { text-decoration: underline; }
-    .date { display: block; color: #aaa; font-size: 0.9em; margin-top: 0.3em; }
-    .footer { text-align: center; margin-top: 3em; font-size: 0.85em; color: #666; }
-  </style>
-</head>
-<body>
-  <h1>Ronald J. Botelho</h1>
-  <h2>Substack Article Archive</h2>
-  <p style='text-align:center; font-size: 1em; color: #ccc;'>
-    <strong>Ronald J. Botelho</strong> is a Ph.D. student in Complex Sciences at Binghamton University. He is also a former U.S. Army Counterintelligence Special Agent, General Military Intelligence Analyst, Interrogator, and Psychological Warfare Specialist with 27 years of national security experience. His research draws from intelligence analysis, systems science, and information theory to expose systemic threats to democracy and trace the anatomy of disinformation in modern governance.
-  </p>
-  <div class='article-list'>
-'''
+          feed = feedparser.parse("https://seeing-the-system.substack.com/feed")
 
-footer = '''  </div>
-  <div class='footer'>
-    <p>All content &copy; Ronald J. Botelho | <a href='https://ronaldjbotelho.substack.com'>Back to Substack</a></p>
-  </div>
-</body>
-</html>'''
+          for entry in feed.entries:
+              title = re.sub(r'[^a-zA-Z0-9 -]', '', entry.title).lower().replace(' ', '-')
+              date = datetime.datetime(*entry.published_parsed[:3]).strftime('%Y-%m-%d')
+              filename = f"posts/{date}-{title}.md"
 
-items = ''
-for entry in feed.entries:
-    title = entry.title
-    link = entry.link
-    date = datetime.datetime(*entry.published_parsed[:6]).strftime('%B %d, %Y')
-    items += f"""<div class='article-item'><a href='{link}'>{title}</a><span class='date'>{date}</span></div>\n"""
+              if not os.path.exists(filename):
+                  with open(filename, 'w') as f:
+                      f.write(f"# {entry.title}\n\n")
+                      f.write(f"_Published: {date}_\n\n")
+                      f.write(markdownify(entry.summary))
+          EOF
 
-with open('index.html', 'w') as f:
-    f.write(header + items + footer)
-EOF
-        python3 generate_index.py
-
-    - name: Commit and push if updated
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git add index.html
-        git diff --cached --quiet || git commit -m "Auto-update index.html with all Substack articles"
-        git push
+      - name: Commit and Push
+        run: |
+          git config user.name "Ron573 Bot"
+          git config user.email "ronbot@users.noreply.github.com"
+          git add posts/
+          git commit -m "Auto-sync new Substack post(s) [daily sync]" || echo "No changes to commit"
+          git push origin main
 
