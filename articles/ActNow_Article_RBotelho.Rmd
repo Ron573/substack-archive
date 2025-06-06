@@ -1,0 +1,43 @@
+---
+title: "Act Now: This Isn’t Politics. It’s Survival."
+author: "Ronald J. Botelho"
+date: 2025-06-06
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+![Act Now - Protest Poster](docs/act_now.png)
+
+> **This isn’t politics. It’s survival.**  
+> Trump’s authoritarian blueprint is no longer a warning—it’s in motion.  
+> Our courts, our votes, our voices—they are all under siege.  
+> Flood congressional phone lines. Protest quietly but forcefully.  
+> Expose the enablers. Amplify the truth. Disrupt the machine.  
+> History will ask what we did. Let your answer be: **everything we could.**
+
+---
+
+## Call to Action
+
+This is your call to act—not tomorrow, not eventually, but **right now**.
+
+- Share the poster far and wide
+- Use it in your presentations, blogs, or campaigns
+- Embed the message into every platform you influence
+- Never stop telling the truth
+
+```{r warning=FALSE, message=FALSE}
+# Placeholder for future visuals or plots
+# For example: barplot(c(5, 8, 13), col = "darkred", names.arg = c("Silence", "Action", "Hope"))
+```
+
+---
+
+> _“If you’re reading this, you are the resistance.”_  
+> —Ronald J. Botelho
+
+[View the GitHub Archive](https://github.com/Ron573/substack-archive)  
+[Return to Substack](https://ron573.github.io/substack-archive/)
