@@ -1,0 +1,15 @@
+{
+    "name": "Ronald J. Botelho \u2014 Substack Archive",
+    "short_name": "Botelho Archive",
+    "start_url": "/substack-archive/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#b30000",
+    "icons": [
+        {
+            "src": "favicon.ico",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/x-icon"
+        }
+    ]
+}
