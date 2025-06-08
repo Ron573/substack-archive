@@ -16,19 +16,22 @@ def get_articles():
                     title = title_line[2:].strip() if title_line else "Untitled"
                     entries.append((date_folder, title, rel_path))
     return sorted(entries)
+
 def update_readme(entries):
     with open(readme_path, "r", encoding="utf-8") as f:
         lines = f.readlines()
 
     start = next(i for i, line in enumerate(lines) if "## 🗂️ Article Index" in line)
-    end = next(i for i in range(start, len(lines)) if lines[i].startswith("---"))
+    end = next(i for i in range(start + 1, len(lines)) if lines[i].startswith("---"))
 
-    table = ["| Date       | Title | Folder |\n", "|------------|-------|--------|\n"]
-
+    table = [
+        "| Date       | Title | Folder |\n",
+        "|------------|-------|--------|\n"
+    ]
     for date, title, path in entries:
         folder = os.path.dirname(path)
-        table.append(f"| {date} | [{title}](./{path}) | `{folder}/` |
-")
+        table.append(f"| {date} | [{title}](./{path}) | `{folder}/` |\n")
+
     new_lines = lines[:start+3] + table + lines[end:]
     with open(readme_path, "w", encoding="utf-8") as f:
         f.writelines(new_lines)
@@ -36,7 +39,5 @@ def update_readme(entries):
 if __name__ == "__main__":
     articles = get_articles()
     update_readme(articles)
-    print("README.md updated with article index.")
-=======
     print("✅ README.md updated with article index.")
 
