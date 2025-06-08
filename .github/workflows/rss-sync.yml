@@ -1,25 +1,33 @@
-name: RSS Sync with Substack
+name: 🔄 Daily RSS Sync
 
 on:
   schedule:
-    - cron: '0 6 * * *'
-  workflow_dispatch:
+    - cron: '0 12 * * *'  # Runs every day at 12:00 UTC
+  workflow_dispatch:      # Manual trigger support
 
 jobs:
-  fetch-feed:
+  sync_articles:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: 📥 Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install feedparser
-        run: pip install feedparser
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
-      - name: Sync from Substack RSS
+      - name: 🔄 Run rss_pull.py
         run: |
+          pip install feedparser
           python3 scripts/rss_pull.py
+
+      - name: 📤 Commit and push changes
+        run: |
           git config --global user.name "RonB"
           git config --global user.email "rbotelho@binghamton.edu"
           git add .
-          git commit -m "Sync new posts from Substack RSS" || echo "No new articles"
-          git push origin main
+          git commit -m "📰 Auto-import new Substack articles via RSS"
+          git push
+        continue-on-error: true
+
