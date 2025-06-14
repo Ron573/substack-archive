@@ -1,24 +1,32 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ron573 Article Index</title>
+  <title>Ron573 GitHub Pages Article Index</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: Georgia, serif;
       max-width: 960px;
-      margin: auto;
-      padding: 40px 20px;
-      background-color: #f9f9f9;
+      margin: 40px auto;
+      padding: 0 20px;
+      background-color: #fff;
+      color: #333;
     }
     h1 {
+      font-size: 2em;
       text-align: center;
+      margin-bottom: 10px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 1em;
+      margin: 20px 0;
+      border: 1px solid #aaa;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 2em;
     }
     th, td {
       padding: 12px;
@@ -27,21 +35,34 @@
       vertical-align: top;
     }
     th {
-      background-color: #eee;
+      background-color: #f2f2f2;
     }
-    a {
-      color: #0645AD;
-      text-decoration: none;
+    tr:hover {
+      background-color: #f9f9f9;
     }
-    a:hover {
-      text-decoration: underline;
+    .footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      text-align: center;
+      color: #666;
+    }
+    .back-link {
+      margin-bottom: 20px;
+      display: block;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
+
   <h1>Ron573 GitHub Pages Article Index</h1>
-  <p>This searchable table lists all mirrored articles with titles, tags, publication dates, and links.</p>
-  <table>
+  <p style="text-align:center;">This searchable table lists all mirrored articles with titles, tags, publication dates, and links.</p>
+
+  <a href="index.html" class="back-link">&larr; Back to Homepage</a>
+
+  <input type="text" id="searchInput" placeholder="🔍 Search articles by title, tag, or date...">
+
+  <table id="articleTable">
     <thead>
       <tr>
         <th>Title</th>
@@ -51,43 +72,56 @@
       </tr>
     </thead>
     <tbody>
-
       <tr>
         <td>🛡️ Trump Deploys Troops in L.A. – Full CSP-Safe Version</td>
         <td>Legal, Executive Power, Constitutional Crisis</td>
         <td>June 14, 2025</td>
         <td><a href="trump_military_la_safe_full.html" target="_blank">View</a></td>
       </tr>
-    
       <tr>
         <td>Federal Troops in L.A.: A Constitutional Tipping Point (Standard HTML)</td>
         <td>Legal, Title 10, Supreme Court</td>
         <td>June 14, 2025</td>
         <td><a href="docs/trump_military_la.html" target="_blank">View</a></td>
       </tr>
-    
       <tr>
         <td>Taliban Joins Russian-Led De-Dollarization (June 2025)</td>
         <td>Geopolitics, De-Dollarization, Russia, Taliban</td>
         <td>June 11, 2025</td>
         <td><a href="articles/dedollarization_june2025.md" target="_blank">View</a></td>
       </tr>
-    
       <tr>
         <td>Declaration of Peaceful Resistance: A Veteran’s Warning</td>
         <td>Project 2025, Resistance, Civil Action</td>
         <td>June 10, 2025</td>
         <td><a href="articles/project_2025_resistance.md" target="_blank">View</a></td>
       </tr>
-    
       <tr>
         <td>📍The Guard Is Not His Army</td>
         <td>National Guard, Military Ethics, Refusal Doctrine</td>
         <td>June 7, 2025</td>
         <td><a href="articles/national_guard_not_trump.md" target="_blank">View</a></td>
       </tr>
-    
     </tbody>
   </table>
+
+  <div class="footer">
+    <p>&copy; 2025 Ronald J. Botelho — Ph.D. Student, Complex Systems, Binghamton University</p>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const tableRows = document.querySelectorAll("#articleTable tbody tr");
+
+    searchInput.addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      tableRows.forEach(row => {
+        row.style.display = [...row.cells].some(cell =>
+          cell.textContent.toLowerCase().includes(query)
+        ) ? "" : "none";
+      });
+    });
+  </script>
+
 </body>
 </html>
