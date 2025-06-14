@@ -1,23 +1,28 @@
-# 📚 Substack Archive by Ronald J. Botelho
 
-Welcome to the GitHub repository archiving all Substack articles authored by **Ronald J. Botelho**, a Ph.D. student in Complex Systems at Binghamton University. These articles explore national security, authoritarianism, systems theory, linguistics, and civil resistance.
+# Substack Archive: Trump LA Troop Deployment Analysis
 
----
+## 📘 Article Title:
+**Federal Troops in L.A.: A Constitutional Tipping Point Under Trump’s Second Term**
 
-## 📌 Latest Articles
+This repository contains the full Markdown version and visual assets of Ronald J. Botelho's June 2025 Substack publication, which analyzes President Donald J. Trump's invocation of Title 10 §12406 to deploy troops into Los Angeles without state consent.
 
-### 🛡️ Declaration of Peaceful Resistance: A Veteran’s Warning (June 10, 2025)
-A call to peaceful resistance against Project 2025 and its authoritarian architecture.
+## 🔍 Summary:
+This article investigates the legal, historical, and constitutional implications of Trump's military deployment—highlighting how it challenges the Posse Comitatus Act, bypasses the Insurrection Act, and sets precedent for unilateral executive militarization.
 
-### 📍 The Guard Is Not His Army (June 7, 2025)
-An exposé on Trump’s use of the National Guard and the threat to civil control of the military.
+Key features:
+- Title 10 §12406 explained
+- Plain-language breakdown
+- Supreme Court implications
+- APA 7th edition citations
+- Full MIT license and author disclaimer
 
----
+## 🗂 Files:
+- `trump_military_la.md` — The full Markdown article
+- `constitutional_conflict_visual.png` — Original visual (if applicable)
+- `README.md` — This overview
 
-## 🔗 Resources
-- [View on GitHub](https://github.com/Ron573/substack-archive)
-- [Visit Substack](https://ronaldjbotelho.substack.com)
+## 👤 Author:
+Ronald J. Botelho, Ph.D. student at Binghamton University
 
----
-
-© 2025 Ronald J. Botelho
+## 📜 License:
+MIT License — See bottom of article for full terms.
