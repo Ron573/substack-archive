@@ -2,23 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Substack Archive Index</title>
+    <title>Ron573 Substack Archive</title>
     <style>
         body { font-family: Arial, sans-serif; padding: 2em; }
         table { width: 100%%; border-collapse: collapse; }
-        th, td { padding: 8px; border-bottom: 1px solid #ccc; text-align: left; }
-        input { margin-bottom: 10px; width: 300px; padding: 5px; }
+        th, td { padding: 10px; border-bottom: 1px solid #ccc; text-align: left; }
+        th { background: #f0f0f0; }
+        input { width: 300px; padding: 6px; margin-bottom: 12px; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
-    <h1>📚 Archive of Substack Articles</h1>
-    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search by title or date...">
-
-    <table id="indexTable">
-        <thead>
-            <tr><th>Title</th><th>Date</th><th>Link</th></tr>
-        </thead>
-        <tbody>
+<h1>Ron573 GitHub Pages Article Index</h1>
+<p>This searchable table lists all mirrored articles. Use the box below to filter by keyword.</p>
+<input type="text" id="searchBox" placeholder="Search by title or date...">
+<table id="articleTable">
+  <thead>
+    <tr><th>Title</th><th>Date</th><th>Link</th></tr>
+  </thead>
+  <tbody>
 <tr><td>Full Archive Maga Projection And Erosion Rbotelho Ver1 Licensed</td><td>June 14, 2025</td><td><a href="full_archive_MAGA_Projection_and_Erosion_RBotelho_VER1_Licensed.html">View</a></td></tr>
 <tr><td>2025-05-23-The-Warning-Signs-Are-Back-This-Time-We-Have-No-Excuse Index</td><td>June 14, 2025</td><td><a href="2025-05-23-the-warning-signs-are-back-this-time-we-have-no-excuse_index.html">View</a></td></tr>
 <tr><td>2025-06-06-Axis-Of-Leverage-How-China-Pakistan-And-India-Weaponize-Afghanistans-Weakness Index</td><td>June 14, 2025</td><td><a href="2025-06-06-axis-of-leverage-how-china-pakistan-and-india-weaponize-afghanistans-weakness_index.html">View</a></td></tr>
@@ -72,19 +75,17 @@
 <tr><td>Sample Article</td><td>June 14, 2025</td><td><a href="sample_article.html">View</a></td></tr>
 <tr><td>Taliban Dedollarization Analysis</td><td>June 14, 2025</td><td><a href="taliban_dedollarization_analysis.html">View</a></td></tr>
 
-        </tbody>
-    </table>
-
-    <script>
-    function searchTable() {
-        const input = document.getElementById("searchInput");
-        const filter = input.value.toLowerCase();
-        const rows = document.querySelectorAll("#indexTable tbody tr");
-        rows.forEach(row => {
-            const text = row.textContent.toLowerCase();
-            row.style.display = text.includes(filter) ? "" : "none";
-        });
-    }
-    </script>
+  </tbody>
+</table>
+<script>
+  const searchBox = document.getElementById("searchBox");
+  const rows = document.querySelectorAll("#articleTable tbody tr");
+  searchBox.addEventListener("input", function() {
+    const term = this.value.toLowerCase();
+    rows.forEach(row => {
+      row.style.display = row.textContent.toLowerCase().includes(term) ? "" : "none";
+    });
+  });
+</script>
 </body>
 </html>
