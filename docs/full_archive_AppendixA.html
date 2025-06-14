@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>full_archive_AppendixA</title>
+  <style>body { font-family: Georgia, serif; margin: 40px; }</style>
+</head>
+<body>
+<h2>Appendix A | Agent‑Based Resilience Model (v0.9)</h2>
+<p><strong>Model platform:</strong> NetLogo 6.3.0   •   <strong>Code repo:</strong> https://github.com/rjbotelho/jus‑soli‑resilience</p>
+<h3>Purpose</h3>
+<p>Simulate how removing a single constitutional safeguard (birth‑right citizenship) propagates through a multi‑layer democratic network (voting‑rights, equal‑protection, rule‑making) and measure survivability (percentage of agents retaining full civic status) over legislative cycles.</p>
+<h3>Key Entities</h3>
+<p>| Entity | Attributes | Notes |
+|--------|------------|-------|
+| Citizen agents | status ∈ {full, partial, stateless}; trust ∈ [0‑1] | 20 000 agents seeded with baseline trust = 0.70 |
+| Institution nodes | redundancy‑weight; jurisdiction | Nodes: Congress, Courts, States, Agencies, Presidency |
+| Shock event | magnitude, frequency | External economic shock every 10 ticks |</p>
+<h3>Scenario Parameters</h3>
+<p>| Parameter | Baseline | Project 2025 |
+|-----------|----------|--------------|
+| Citizenship redundancy (Rc) | 3 | 1 (executive only) |
+| Loop latency (L) | 2 ticks | 5 ticks (agency purge) |
+| Trust‑decay rate (δ) | 0.01 | 0.04 |</p>
+<h3>Results</h3>
+<p>| Metric | Healthy Republic | Project 2025 |
+|--------|------------------|--------------|
+| Survivability after 3 cycles | 92 % | 57 % (-38 %) |
+| Avg. trust score | 0.66 | 0.41 |
+| Time to first cascade failure | &gt;50 ticks | 17 ticks |</p>
+<h3>Interpretation</h3>
+<p>Lower redundancy and longer feedback latency create a tipping‑point where an external shock pushes the system past a critical threshold, triggering cascade failure of rights (statelessness agents spike). This empirically supports the article’s claim that revoking <em>jus soli</em> moves the republic from antifragile to brittle.</p>
+</body>
+</html>
