@@ -16,30 +16,30 @@
   </style>
 </head>
 <body>
-  <h1>Ron573 GitHub Pages Article Index</h1>
-  <p style="text-align:center;">This searchable table lists all mirrored articles with titles, dates, and links.<br>Use the box below to filter by keywords.</p>
-  <p><a href="index.html">&larr; Back to Homepage</a></p>
-  <input type="text" id="searchBox" placeholder="🔍 Search articles by title or date...">
-  <table id="articleTable">
-    <thead><tr><th>Title</th><th>Date</th><th>Link</th></tr></thead>
-    <tbody>
+<h1>Ron573 GitHub Pages Article Index</h1>
+<p style="text-align:center;">This searchable table lists all mirrored articles with titles, dates, and links.<br>Use the box below to filter by keywords.</p>
+<p><a href="index.html">&larr; Back to Homepage</a></p>
+<input type="text" id="searchBox" placeholder="🔍 Search articles by title or date...">
+<table id="articleTable">
+  <thead><tr><th>Title</th><th>Date</th><th>Link</th></tr></thead>
+  <tbody>
 <tr><td>Project2025 Vet Warning</td><td>June 14, 2025</td><td><a href="project2025_vet_warning.html">View</a></td></tr>
 <tr><td>Sample Article</td><td>June 14, 2025</td><td><a href="sample_article.html">View</a></td></tr>
 <tr><td>Taliban Dedollarization Analysis</td><td>June 14, 2025</td><td><a href="taliban_dedollarization_analysis.html">View</a></td></tr>
 <tr><td>Trump Military La</td><td>June 14, 2025</td><td><a href="trump_military_la.html">View</a></td></tr>
 <tr><td>Trump Military La Safe</td><td>June 14, 2025</td><td><a href="trump_military_la_safe.html">View</a></td></tr>
 <tr><td>Trump Military La Safe Full</td><td>June 14, 2025</td><td><a href="trump_military_la_safe_full.html">View</a></td></tr>
-    </tbody>
-  </table>
-  <script>
-    const searchBox = document.getElementById("searchBox");
-    const rows = document.querySelectorAll("#articleTable tbody tr");
-    searchBox.addEventListener("input", function() {
-      const term = this.value.toLowerCase();
-      rows.forEach(row => {
-        row.style.display = row.textContent.toLowerCase().includes(term) ? "" : "none";
-      });
+  </tbody>
+</table>
+<script>
+  const searchBox = document.getElementById("searchBox");
+  const rows = document.querySelectorAll("#articleTable tbody tr");
+  searchBox.addEventListener("input", function() {
+    const term = this.value.toLowerCase();
+    rows.forEach(row => {
+      row.style.display = row.textContent.toLowerCase().includes(term) ? "" : "none";
     });
-  </script>
+  });
+</script>
 </body>
 </html>
